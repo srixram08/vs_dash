@@ -72,13 +72,13 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
       description="Launch a new project track for Web, Brand, or AI Agent automation."
       size="md"
     >
-      <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+      <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Select Client</label>
+          <label className="block text-xs font-semibold text-slate-700">Select Client</label>
           <select
             value={clientId}
             onChange={(e) => setClientId(e.target.value)}
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             required
           >
             {clients.map((c) => (
@@ -98,11 +98,11 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
         />
 
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Service Offering</label>
+          <label className="block text-xs font-semibold text-slate-700">Service Offering</label>
           <select
             value={serviceType}
             onChange={(e) => setServiceType(e.target.value as ServiceType)}
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
           >
             <option value="website_design_dev">Website Design & Development</option>
             <option value="logo_branding">Logo & Brand Identity</option>
@@ -127,18 +127,18 @@ export const CreateProjectModal: React.FC<CreateProjectModalProps> = ({
         </div>
 
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Assign Founder</label>
+          <label className="block text-xs font-semibold text-slate-700">Assign Founder</label>
           <select
             value={assignedTo}
             onChange={(e) => setAssignedTo(e.target.value)}
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
           >
             <option value="a0000000-0000-0000-0000-000000000001">Sanjay (Dev & AI Lead)</option>
             <option value="a0000000-0000-0000-0000-000000000002">Sriram (Brand & Design Lead)</option>
           </select>
         </div>
 
-        <div className="pt-3 flex justify-end gap-2 border-t border-slate-800">
+        <div className="pt-3 flex justify-end gap-2 border-t border-slate-100">
           <Button type="button" variant="outline" size="sm" onClick={onClose}>
             Cancel
           </Button>

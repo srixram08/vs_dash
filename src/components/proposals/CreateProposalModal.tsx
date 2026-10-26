@@ -109,14 +109,14 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
       description="Build modular line-item deliverables with dynamic totals for client sign-off."
       size="lg"
     >
-      <form onSubmit={handleSubmit} className="space-y-5 text-xs">
+      <form onSubmit={handleSubmit} className="space-y-5 text-xs font-sans">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Link to Project (Optional)</label>
+            <label className="block text-xs font-semibold text-slate-700">Link to Project (Optional)</label>
             <select
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="">No Project Linked</option>
               {projects.map((p) => (
@@ -128,11 +128,11 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Link to Inquiry (Optional)</label>
+            <label className="block text-xs font-semibold text-slate-700">Link to Inquiry (Optional)</label>
             <select
               value={inquiryId}
               onChange={(e) => setInquiryId(e.target.value)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="">No Inquiry Linked</option>
               {inquiries.map((inq) => (
@@ -147,14 +147,14 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
         {/* Deliverables Line Items */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Line-Item Deliverables & Pricing
             </h4>
             <Button
               type="button"
               variant="outline"
               size="sm"
-              leftIcon={<Plus className="w-3.5 h-3.5" />}
+              leftIcon={<Plus className="w-3.5 h-3.5 text-emerald-600" />}
               onClick={handleAddDeliverable}
             >
               Add Item
@@ -165,7 +165,7 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
             {deliverables.map((item, index) => (
               <div
                 key={item.id}
-                className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 space-y-2.5 relative group"
+                className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5 relative group"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-[10px] font-bold text-slate-400">#{index + 1}</span>
@@ -174,19 +174,19 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
                     placeholder="Deliverable Title (e.g. AI Workflow Integration)"
                     value={item.title}
                     onChange={(e) => handleUpdateDeliverable(item.id, 'title', e.target.value)}
-                    className="flex-1 rounded-lg bg-slate-950 border border-slate-800 px-3 py-1.5 text-xs text-slate-100 outline-none focus:border-primary-500"
+                    className="flex-1 rounded-lg bg-white border border-slate-300 px-3 py-1.5 text-xs text-slate-900 outline-none focus:border-emerald-500 shadow-sm"
                     required
                   />
-                  <div className="flex items-center gap-1 w-32">
-                    <span className="text-slate-400">$</span>
+                  <div className="flex items-center gap-1 w-36">
+                    <span className="text-slate-500 font-bold">₹</span>
                     <input
                       type="number"
-                      placeholder="Price"
+                      placeholder="Price in INR"
                       value={item.price}
                       onChange={(e) =>
                         handleUpdateDeliverable(item.id, 'price', Number(e.target.value))
                       }
-                      className="w-full rounded-lg bg-slate-950 border border-slate-800 px-2 py-1.5 text-xs text-emerald-400 font-semibold outline-none focus:border-emerald-500"
+                      className="w-full rounded-lg bg-white border border-slate-300 px-2 py-1.5 text-xs text-emerald-700 font-bold outline-none focus:border-emerald-500 shadow-sm"
                       required
                     />
                   </div>
@@ -194,7 +194,7 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleRemoveDeliverable(item.id)}
-                      className="text-slate-400 hover:text-rose-400 p-1"
+                      className="text-slate-400 hover:text-rose-600 p-1"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -206,7 +206,7 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
                   placeholder="Scope description, key milestones, and specifications..."
                   value={item.description}
                   onChange={(e) => handleUpdateDeliverable(item.id, 'description', e.target.value)}
-                  className="w-full rounded-lg bg-slate-950 border border-slate-800 p-2 text-xs text-slate-300 placeholder-slate-400 outline-none focus:border-primary-500"
+                  className="w-full rounded-lg bg-white border border-slate-300 p-2 text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-emerald-500 shadow-sm"
                 />
               </div>
             ))}
@@ -214,15 +214,15 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
         </div>
 
         {/* Total Price Bar */}
-        <div className="p-4 rounded-xl bg-gradient-to-r from-primary-950/40 via-cyan-950/40 to-slate-900/80 border border-primary-500/30 flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-cyan-400" />
+            <Calculator className="w-5 h-5 text-emerald-700" />
             <div>
-              <p className="text-xs font-semibold text-slate-200">Total Contract Value</p>
-              <p className="text-[11px] text-slate-400">Sum of all deliverable line items</p>
+              <p className="text-xs font-bold text-emerald-950">Total Contract Value</p>
+              <p className="text-[11px] text-emerald-700">Sum of all deliverable line items</p>
             </div>
           </div>
-          <span className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-cyan-400">
+          <span className="text-xl font-extrabold text-emerald-800">
             {formatCurrency(totalPrice)}
           </span>
         </div>
@@ -236,11 +236,11 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
             required
           />
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Initial Status</label>
+            <label className="block text-xs font-semibold text-slate-700">Initial Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as 'draft' | 'sent')}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="sent">Mark as Sent to Client</option>
               <option value="draft">Save as Internal Draft</option>
@@ -248,7 +248,7 @@ export const CreateProposalModal: React.FC<CreateProposalModalProps> = ({
           </div>
         </div>
 
-        <div className="pt-3 flex justify-end gap-2 border-t border-slate-800">
+        <div className="pt-3 flex justify-end gap-2 border-t border-slate-100">
           <Button type="button" variant="outline" size="sm" onClick={onClose}>
             Cancel
           </Button>

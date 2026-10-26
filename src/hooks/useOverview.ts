@@ -3,6 +3,7 @@ import { useProjects } from './useProjects';
 import { useTasks } from './useTasks';
 import { usePayments } from './usePayments';
 import { useProposals } from './useProposals';
+import { formatCurrency } from '../lib/utils';
 
 export interface AttentionItem {
   id: string;
@@ -84,7 +85,7 @@ export function useOverview() {
     attentionNeeded.push({
       id: `att-py-${py.id}`,
       type: 'payment',
-      title: `Overdue Payment: $${Number(py.amount).toLocaleString()}`,
+      title: `Overdue Payment: ${formatCurrency(py.amount)}`,
       subtitle: `${project?.title || 'Project'} &bull; Due ${py.due_date}`,
       urgency: 'high',
       actionUrl: '/payments',

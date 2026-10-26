@@ -1,44 +1,32 @@
 import React, { useState, useMemo } from 'react';
 import { useInquiries } from '../hooks/useInquiries';
-import { Inquiry, InquiryStatus } from '../types';
+import { Inquiry, ServiceType, InquiryStatus } from '../types';
+import {
+  formatDate,
+  formatRelativeTime,
+  formatServiceType,
+  getInquiryStatusBadge,
+} from '../lib/utils';
 import { InquiryDetailDrawer } from '../components/inquiries/InquiryDetailDrawer';
 import { ConvertToProjectModal } from '../components/inquiries/ConvertToProjectModal';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import {
-  getInquiryStatusBadge,
-  formatDate,
-  formatRelativeTime,
-  formatServiceType,
-} from '../lib/utils';
-import {
-  Search,
-  Filter,
-  Inbox,
-  Sparkles,
-  ExternalLink,
-  ChevronRight,
-  Send,
-  PlusCircle,
-} from 'lucide-react';
+import { Search, Plus, Filter, Sparkles, ChevronRight, Inbox, FileText } from 'lucide-react';
+import { RupeeIcon } from '../components/ui/RupeeIcon';
 
 export const Inquiries: React.FC = () => {
-  const {
-    inquiries,
-    isLoading,
-    updateStatus,
-    updateNotes,
-    convertToProject,
-    submitTestInquiry,
-  } = useInquiries();
+  const { inquiries, isLoading, updateStatus, updateNotes, submitTestInquiry, convertToProject } =
+    useInquiries();
 
-  const [search, setSearch] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [selectedService, setSelectedService] = useState<string>('all');
+  const [search, setSearch] = useState('');
+
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
-  const [inquiryToConvert, setInquiryToConvert] = useState<Inquiry | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const [isConvertModalOpen, setIsConvertModalOpen] = useState(false);
+  const [inquiryToConvert, setInquiryToConvert] = useState<Inquiry | null>(null);
 
   // Status Counts
   const counts = useMemo(() => {
@@ -52,43 +40,39 @@ export const Inquiries: React.FC = () => {
     };
   }, [inquiries]);
 
-  // Filtered inquiries
+  // Filtered List
   const filteredInquiries = useMemo(() => {
     return inquiries.filter((inq) => {
+      const matchesStatus = selectedStatus === 'all' || inq.status === selectedStatus;
+      const matchesService = selectedService === 'all' || inq.service_type === selectedService;
       const matchesSearch =
         inq.name.toLowerCase().includes(search.toLowerCase()) ||
-        (inq.company && inq.company.toLowerCase().includes(search.toLowerCase())) ||
         inq.email.toLowerCase().includes(search.toLowerCase()) ||
+        (inq.company && inq.company.toLowerCase().includes(search.toLowerCase())) ||
         inq.requirements.toLowerCase().includes(search.toLowerCase());
 
-      const matchesStatus =
-        selectedStatus === 'all' || inq.status === selectedStatus;
-
-      const matchesService =
-        selectedService === 'all' || inq.service_type === selectedService;
-
-      return matchesSearch && matchesStatus && matchesService;
+      return matchesStatus && matchesService && matchesSearch;
     });
-  }, [inquiries, search, selectedStatus, selectedService]);
+  }, [inquiries, selectedStatus, selectedService, search]);
 
-  const handleRowClick = (inquiry: Inquiry) => {
-    setSelectedInquiry(inquiry);
+  const handleRowClick = (inq: Inquiry) => {
+    setSelectedInquiry(inq);
     setIsDrawerOpen(true);
   };
 
-  const handleOpenConvert = (inquiry: Inquiry) => {
-    setInquiryToConvert(inquiry);
+  const handleOpenConvert = (inq: Inquiry) => {
+    setInquiryToConvert(inq);
     setIsConvertModalOpen(true);
   };
 
-  const handleSimulatePublicLead = () => {
+  const handleSimulatePublicLead = async () => {
     const testSamples = [
       {
         name: 'Zephyr AI Labs',
         company: 'Zephyr Corp',
         email: 'founder@zephyrlabs.io',
-        service_type: 'ai_agents_automation',
-        budget_range: '$12k - $18k',
+        service_type: 'ai_agents_automation' as ServiceType,
+        budget_range: '₹10,00,000 - ₹18,00,000',
         requirements:
           'Building autonomous customer research agents that query web data and synthesize market briefs in Markdown.',
       },
@@ -96,8 +80,8 @@ export const Inquiries: React.FC = () => {
         name: 'Aetheria Studio',
         company: 'Aetheria Luxury',
         email: 'creative@aetheria.design',
-        service_type: 'logo_branding',
-        budget_range: '$6k - $10k',
+        service_type: 'logo_branding' as ServiceType,
+        budget_range: '₹4,50,000 - ₹8,00,000',
         requirements:
           'Luxury fragrance brand visual identity, embossed packaging tokens, and responsive brand portal.',
       },
@@ -105,29 +89,42 @@ export const Inquiries: React.FC = () => {
         name: 'HyperScale Systems',
         company: 'HyperScale Inc',
         email: 'cto@hyperscale.dev',
-        service_type: 'website_design_dev',
-        budget_range: '$15k - $25k',
+        service_type: 'website_design_dev' as ServiceType,
+        budget_range: '₹12,00,000 - ₹22,00,000',
         requirements:
           'Developer-centric landing page, interactive terminal demo, dynamic benchmark charts, and Next.js static generation.',
       },
     ];
 
     const randomLead = testSamples[Math.floor(Math.random() * testSamples.length)];
-    submitTestInquiry(randomLead);
+    await submitTestInquiry({
+      ...randomLead,
+      phone: '+91 98765 43210',
+      deadline: new Date(Date.now() + 21 * 86400000).toISOString().split('T')[0],
+      reference_links: 'https://linear.app, https://resend.com',
+      file_urls: ['inquiries/spec-brief.pdf'],
+      notes: 'Simulated public website submission via live form.',
+    });
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-sans">
       {/* Top Header & Simulation Action */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Inquiries Feed
-            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
-              Live Realtime
+          <div className="flex items-center gap-2 mb-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Realtime Inflow
             </span>
+            <span className="text-xs text-slate-400 font-normal">
+              {inquiries.length} total submissions
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+            Inquiries Feed
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-0.5">
             Incoming client submissions from your public website form
           </p>
         </div>
@@ -136,89 +133,91 @@ export const Inquiries: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            leftIcon={<Sparkles className="w-3.5 h-3.5 text-cyan-400" />}
+            leftIcon={<Sparkles className="w-3.5 h-3.5 text-emerald-600" />}
             onClick={handleSimulatePublicLead}
-            className="text-xs border-cyan-500/30 hover:border-cyan-500/50 hover:bg-cyan-950/20"
+            className="rounded-full text-xs font-semibold px-4 py-2 border-emerald-200 hover:border-emerald-300 hover:bg-emerald-50 text-emerald-800"
           >
             Simulate Public Site Lead
           </Button>
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-800">
-        {[
-          { key: 'all', label: 'All Inquiries', count: counts.all },
-          { key: 'new', label: 'New Leads', count: counts.new },
-          { key: 'reviewing', label: 'Reviewing', count: counts.reviewing },
-          { key: 'proposal_sent', label: 'Proposal Sent', count: counts.proposal_sent },
-          { key: 'accepted', label: 'Accepted', count: counts.accepted },
-          { key: 'rejected', label: 'Rejected', count: counts.rejected },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setSelectedStatus(tab.key)}
-            className={`px-3 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              selectedStatus === tab.key
-                ? 'bg-primary-600/20 text-primary-300 border border-primary-500/30'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-            }`}
-          >
-            <span>{tab.label}</span>
-            <span
-              className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+      {/* Segmented Filter Pills (Tran Mau Tri Tam Style) */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <div className="segmented-pill-container overflow-x-auto max-w-full">
+          {[
+            { key: 'all', label: 'All Inquiries', count: counts.all },
+            { key: 'new', label: 'New', count: counts.new },
+            { key: 'reviewing', label: 'Reviewing', count: counts.reviewing },
+            { key: 'proposal_sent', label: 'Proposal Sent', count: counts.proposal_sent },
+            { key: 'accepted', label: 'Accepted', count: counts.accepted },
+            { key: 'rejected', label: 'Rejected', count: counts.rejected },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setSelectedStatus(tab.key)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
                 selectedStatus === tab.key
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-slate-800 text-slate-400'
+                  ? 'bg-white text-slate-950 font-bold shadow-2xs'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
-              {tab.count}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* Search and Secondary Filter */}
-      <div className="flex flex-col sm:flex-row items-center gap-3">
-        <div className="relative flex-1 w-full">
-          <Input
-            placeholder="Search inquiries by client name, email, company, requirements..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            leftIcon={<Search className="w-4 h-4" />}
-          />
+              <span>{tab.label}</span>
+              <span
+                className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                  selectedStatus === tab.key
+                    ? 'bg-emerald-100 text-emerald-800'
+                    : 'bg-slate-200/80 text-slate-600'
+                }`}
+              >
+                {tab.count}
+              </span>
+            </button>
+          ))}
         </div>
 
-        <div className="w-full sm:w-auto">
+        {/* Service Type Filter & Search Bar */}
+        <div className="flex items-center gap-2 w-full lg:w-auto">
+          <div className="relative flex-1 lg:w-64">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Filter leads..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full bg-white text-xs text-slate-800 placeholder-slate-400 pl-9 pr-3 py-1.5 rounded-full border border-slate-200 outline-none focus:border-emerald-500 shadow-2xs"
+            />
+          </div>
+
           <select
             value={selectedService}
             onChange={(e) => setSelectedService(e.target.value)}
-            className="w-full sm:w-48 rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary-500"
+            className="rounded-full bg-white border border-slate-200 px-3 py-1.5 text-xs text-slate-700 outline-none focus:border-emerald-500 shadow-2xs"
           >
-            <option value="all">All Studio Services</option>
+            <option value="all">All Services</option>
             <option value="website_design_dev">Web Design & Dev</option>
             <option value="logo_branding">Logo & Branding</option>
-            <option value="ai_agents_automation">AI & Automations</option>
+            <option value="ai_agents_automation">AI Automations</option>
           </select>
         </div>
       </div>
 
-      {/* Inquiries Table */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden backdrop-blur-md">
+      {/* Minimalist Inquiries Table */}
+      <div className="minimal-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-900/90 text-slate-400 uppercase tracking-wider text-[10px] border-b border-slate-800">
+            <thead className="bg-slate-50/80 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-bold">
               <tr>
-                <th className="py-3 px-4 font-semibold">Client & Company</th>
-                <th className="py-3 px-4 font-semibold">Service</th>
-                <th className="py-3 px-4 font-semibold">Budget Range</th>
-                <th className="py-3 px-4 font-semibold">Deadline</th>
-                <th className="py-3 px-4 font-semibold">Status</th>
-                <th className="py-3 px-4 font-semibold">Received</th>
-                <th className="py-3 px-4 font-semibold text-right">Action</th>
+                <th className="py-3.5 px-5">Client & Company</th>
+                <th className="py-3.5 px-4">Service</th>
+                <th className="py-3.5 px-4">Budget Range</th>
+                <th className="py-3.5 px-4">Target Date</th>
+                <th className="py-3.5 px-4">Status</th>
+                <th className="py-3.5 px-4">Received</th>
+                <th className="py-3.5 px-5 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80">
+            <tbody className="divide-y divide-slate-100">
               {isLoading ? (
                 <tr>
                   <td colSpan={7} className="text-center py-12 text-slate-400">
@@ -227,9 +226,9 @@ export const Inquiries: React.FC = () => {
                 </tr>
               ) : filteredInquiries.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center py-12 text-slate-400">
-                    <Inbox className="w-8 h-8 mx-auto text-slate-600 mb-2" />
-                    <p className="font-medium text-slate-300">No inquiries match your filters</p>
+                  <td colSpan={7} className="text-center py-12 text-slate-500">
+                    <Inbox className="w-8 h-8 mx-auto text-slate-300 mb-2" />
+                    <p className="font-bold text-slate-700">No inquiries match your filters</p>
                     <p className="text-[11px] text-slate-400 mt-1">
                       Try resetting your search query or simulate a test lead above.
                     </p>
@@ -242,45 +241,45 @@ export const Inquiries: React.FC = () => {
                     <tr
                       key={inq.id}
                       onClick={() => handleRowClick(inq)}
-                      className="hover:bg-slate-800/50 transition cursor-pointer group"
+                      className="hover:bg-slate-50/80 transition-colors cursor-pointer group"
                     >
-                      <td className="py-3.5 px-4">
-                        <div className="font-semibold text-slate-100 group-hover:text-cyan-400 transition">
+                      <td className="py-4 px-5">
+                        <div className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
                           {inq.name}
                         </div>
-                        <div className="text-[11px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                        <div className="text-[11px] text-slate-500 flex items-center gap-1.5 mt-0.5">
                           <span>{inq.company || inq.email}</span>
                         </div>
                       </td>
 
-                      <td className="py-3.5 px-4 font-medium text-slate-300">
+                      <td className="py-4 px-4 font-medium text-slate-700">
                         {formatServiceType(inq.service_type)}
                       </td>
 
-                      <td className="py-3.5 px-4 font-semibold text-emerald-400">
+                      <td className="py-4 px-4 font-bold text-emerald-800 tracking-tight">
                         {inq.budget_range}
                       </td>
 
-                      <td className="py-3.5 px-4 text-slate-400">
+                      <td className="py-4 px-4 text-slate-600">
                         {formatDate(inq.deadline)}
                       </td>
 
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${statusBadge.className}`}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold border ${statusBadge.className}`}
                         >
                           <span className={`w-1.5 h-1.5 rounded-full ${statusBadge.dotClass}`} />
                           {statusBadge.label}
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-slate-400 text-[11px]">
+                      <td className="py-4 px-4 text-slate-500 text-[11px]">
                         {formatRelativeTime(inq.created_at)}
                       </td>
 
-                      <td className="py-3.5 px-4 text-right">
-                        <div className="inline-flex items-center gap-1 text-slate-400 group-hover:text-white">
-                          <span className="text-[11px] font-medium hidden sm:inline">Details</span>
+                      <td className="py-4 px-5 text-right">
+                        <div className="inline-flex items-center gap-1 text-slate-400 group-hover:text-emerald-700 font-semibold transition-colors">
+                          <span className="text-[11px] hidden sm:inline">Details</span>
                           <ChevronRight className="w-4 h-4" />
                         </div>
                       </td>

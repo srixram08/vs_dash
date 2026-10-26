@@ -51,42 +51,42 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
       description={client.company || 'Private Client'}
       width="2xl"
     >
-      <div className="space-y-6 text-sm">
+      <div className="space-y-6 text-sm font-sans">
         {/* Contact Header */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-          <div className="flex items-center gap-2 text-slate-300">
-            <Mail className="w-4 h-4 text-primary-400 flex-shrink-0" />
-            <a href={`mailto:${client.email}`} className="text-xs hover:underline truncate">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="flex items-center gap-2 text-slate-700">
+            <Mail className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <a href={`mailto:${client.email}`} className="text-xs hover:underline truncate font-medium">
               {client.email}
             </a>
           </div>
-          <div className="flex items-center gap-2 text-slate-300">
-            <Phone className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+          <div className="flex items-center gap-2 text-slate-700">
+            <Phone className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span className="text-xs">{client.phone || 'No phone'}</span>
           </div>
-          <div className="flex items-center gap-2 text-slate-300">
-            <Building className="w-4 h-4 text-amber-400 flex-shrink-0" />
+          <div className="flex items-center gap-2 text-slate-700">
+            <Building className="w-4 h-4 text-amber-600 flex-shrink-0" />
             <span className="text-xs truncate">{client.company || '—'}</span>
           </div>
         </div>
 
         {/* Financial KPI Summary for Client */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800">
-            <p className="text-[10px] uppercase font-bold text-slate-400">Total Contracted</p>
-            <p className="text-base font-bold text-slate-100 mt-1">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <p className="text-[10px] uppercase font-bold text-slate-500">Total Contracted</p>
+            <p className="text-base font-bold text-slate-900 mt-1">
               {formatCurrency(totalContract)}
             </p>
           </div>
-          <div className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800">
-            <p className="text-[10px] uppercase font-bold text-slate-400">Total Paid</p>
-            <p className="text-base font-bold text-emerald-400 mt-1">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <p className="text-[10px] uppercase font-bold text-slate-500">Total Paid</p>
+            <p className="text-base font-bold text-emerald-700 mt-1">
               {formatCurrency(totalPaid)}
             </p>
           </div>
-          <div className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800">
-            <p className="text-[10px] uppercase font-bold text-slate-400">Outstanding</p>
-            <p className="text-base font-bold text-amber-400 mt-1">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <p className="text-[10px] uppercase font-bold text-slate-500">Outstanding</p>
+            <p className="text-base font-bold text-amber-700 mt-1">
               {formatCurrency(totalOutstanding)}
             </p>
           </div>
@@ -94,13 +94,13 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
 
         {/* Projects Section */}
         <div className="space-y-3">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-            <FolderKanban className="w-4 h-4 text-cyan-400" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
+            <FolderKanban className="w-4 h-4 text-emerald-600" />
             Projects ({projects.length})
           </h3>
 
           {projects.length === 0 ? (
-            <p className="text-xs text-slate-400 italic p-3 rounded-lg bg-slate-900/30 border border-slate-800">
+            <p className="text-xs text-slate-500 italic p-3 rounded-lg bg-slate-50 border border-slate-200">
               No active or past projects for this client.
             </p>
           ) : (
@@ -110,18 +110,18 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 return (
                   <div
                     key={proj.id}
-                    className="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 flex items-center justify-between"
+                    className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between"
                   >
                     <div>
-                      <h4 className="text-xs font-semibold text-slate-100">{proj.title}</h4>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <h4 className="text-xs font-bold text-slate-900">{proj.title}</h4>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
                         {formatServiceType(proj.service_type)} &bull; Due {formatDate(proj.due_date)}
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-20 bg-slate-800 rounded-full h-1.5 overflow-hidden hidden sm:block">
+                      <div className="w-20 bg-slate-200 rounded-full h-1.5 overflow-hidden hidden sm:block">
                         <div
-                          className="bg-cyan-500 h-full rounded-full"
+                          className="bg-emerald-500 h-full rounded-full"
                           style={{ width: `${proj.progress_percent}%` }}
                         />
                       </div>
@@ -140,12 +140,12 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
 
         {/* Proposals Section */}
         <div className="space-y-3">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-            <FileText className="w-4 h-4 text-violet-400" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
+            <FileText className="w-4 h-4 text-emerald-600" />
             Proposals ({proposals.length})
           </h3>
           {proposals.length === 0 ? (
-            <p className="text-xs text-slate-400 italic p-3 rounded-lg bg-slate-900/30 border border-slate-800">
+            <p className="text-xs text-slate-500 italic p-3 rounded-lg bg-slate-50 border border-slate-200">
               No proposals generated yet.
             </p>
           ) : (
@@ -153,17 +153,17 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
               {proposals.map((pr) => (
                 <div
                   key={pr.id}
-                  className="p-3 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-between"
+                  className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between"
                 >
                   <div>
-                    <span className="text-xs font-semibold text-slate-200">
+                    <span className="text-xs font-bold text-slate-900">
                       {formatCurrency(pr.total_price)}
                     </span>
-                    <p className="text-[11px] text-slate-400 mt-0.5">
+                    <p className="text-[11px] text-slate-500 mt-0.5">
                       Sent {formatDate(pr.sent_at)} &bull; Valid until {formatDate(pr.valid_until)}
                     </p>
                   </div>
-                  <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                  <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-800">
                     {pr.status}
                   </span>
                 </div>
@@ -174,12 +174,12 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
 
         {/* Payments Section */}
         <div className="space-y-3">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-            <CreditCard className="w-4 h-4 text-emerald-400" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
+            <CreditCard className="w-4 h-4 text-emerald-600" />
             Payment History & Invoices ({payments.length})
           </h3>
           {payments.length === 0 ? (
-            <p className="text-xs text-slate-400 italic p-3 rounded-lg bg-slate-900/30 border border-slate-800">
+            <p className="text-xs text-slate-500 italic p-3 rounded-lg bg-slate-50 border border-slate-200">
               No payments logged for this client yet.
             </p>
           ) : (
@@ -189,14 +189,14 @@ export const ClientDetailDrawer: React.FC<ClientDetailDrawerProps> = ({
                 return (
                   <div
                     key={py.id}
-                    className="p-3 rounded-xl bg-slate-900/50 border border-slate-800 flex items-center justify-between text-xs"
+                    className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs"
                   >
                     <div>
-                      <div className="font-semibold text-slate-200">
+                      <div className="font-bold text-slate-900">
                         {formatCurrency(py.amount)}{' '}
-                        <span className="font-normal text-slate-400 capitalize">({py.type})</span>
+                        <span className="font-normal text-slate-500 capitalize">({py.type})</span>
                       </div>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <p className="text-[11px] text-slate-500 mt-0.5">
                         Due {formatDate(py.due_date)}{' '}
                         {py.paid_at && `&bull; Paid on ${formatDate(py.paid_at)} via ${py.method || 'Transfer'}`}
                       </p>

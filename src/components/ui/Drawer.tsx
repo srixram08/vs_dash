@@ -48,29 +48,29 @@ export const Drawer: React.FC<DrawerProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
         <div
           className={cn(
-            'w-screen border-l border-slate-800 bg-[#0b101d] shadow-2xl transition-all animate-slide-in-right flex flex-col',
+            'w-screen border-l border-slate-200 bg-white shadow-2xl transition-all animate-slide-in-right flex flex-col text-slate-900',
             widthClasses[width],
             className
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4.5 bg-slate-900/60">
+          <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4.5 bg-slate-50/80">
             <div>
-              {title && <h2 className="text-base font-semibold text-slate-100">{title}</h2>}
+              {title && <h2 className="text-base font-bold text-slate-900">{title}</h2>}
               {description && (
-                <p className="mt-0.5 text-xs text-slate-400">{description}</p>
+                <p className="mt-0.5 text-xs text-slate-500">{description}</p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-100 transition"
+              className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
             >
               <X className="w-5 h-5" />
             </button>

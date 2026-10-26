@@ -65,20 +65,20 @@ export const ConvertToProjectModal: React.FC<ConvertToProjectModalProps> = ({
       description="This will automatically create a new client record, launch the project in Planning status, and log the action in your audit trail."
       size="md"
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 font-sans">
         {/* Source Inquiry Summary */}
-        <div className="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs space-y-1">
+        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-1">
           <div className="flex justify-between">
-            <span className="text-slate-400">Client:</span>
-            <span className="font-semibold text-slate-200">{inquiry.name}</span>
+            <span className="text-slate-500">Client:</span>
+            <span className="font-bold text-slate-800">{inquiry.name}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Company:</span>
-            <span className="text-slate-200">{inquiry.company || '—'}</span>
+            <span className="text-slate-500">Company:</span>
+            <span className="text-slate-800 font-medium">{inquiry.company || '—'}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Budget Range:</span>
-            <span className="font-semibold text-emerald-400">{inquiry.budget_range}</span>
+            <span className="text-slate-500">Budget Range:</span>
+            <span className="font-bold text-emerald-700">{inquiry.budget_range}</span>
           </div>
         </div>
 
@@ -106,18 +106,18 @@ export const ConvertToProjectModal: React.FC<ConvertToProjectModalProps> = ({
         </div>
 
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Assign Lead Founder</label>
+          <label className="block text-xs font-semibold text-slate-700">Assign Lead Founder</label>
           <select
             value={assignedTo}
             onChange={(e) => setAssignedTo(e.target.value)}
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
           >
             <option value="a0000000-0000-0000-0000-000000000001">Sanjay (Dev & AI Lead)</option>
             <option value="a0000000-0000-0000-0000-000000000002">Sriram (Brand & Design Lead)</option>
           </select>
         </div>
 
-        <div className="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+        <div className="pt-3 flex items-center justify-end gap-3 border-t border-slate-100">
           <Button type="button" variant="outline" size="sm" onClick={onClose}>
             Cancel
           </Button>

@@ -7,10 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatCurrency(amount: number | null | undefined): string {
-  if (amount === null || amount === undefined || isNaN(amount)) return '$0';
-  return new Intl.NumberFormat('en-US', {
+  if (amount === null || amount === undefined || isNaN(amount)) return '₹0';
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     maximumFractionDigits: 0,
   }).format(amount);
 }
@@ -112,38 +112,38 @@ export function getInquiryStatusBadge(status: InquiryStatus) {
     case 'new':
       return {
         label: 'New Lead',
-        className: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-        dotClass: 'bg-cyan-400 animate-pulse',
+        className: 'bg-emerald-50 text-emerald-700 border-emerald-300 font-medium',
+        dotClass: 'bg-emerald-500 animate-pulse',
       };
     case 'reviewing':
       return {
         label: 'Reviewing',
-        className: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-        dotClass: 'bg-amber-400',
+        className: 'bg-amber-50 text-amber-800 border-amber-300 font-medium',
+        dotClass: 'bg-amber-500',
       };
     case 'proposal_sent':
       return {
         label: 'Proposal Sent',
-        className: 'bg-violet-500/10 text-violet-400 border-violet-500/30',
-        dotClass: 'bg-violet-400',
+        className: 'bg-teal-50 text-teal-700 border-teal-300 font-medium',
+        dotClass: 'bg-teal-500',
       };
     case 'accepted':
       return {
         label: 'Accepted',
-        className: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-        dotClass: 'bg-emerald-400',
+        className: 'bg-green-100 text-green-800 border-green-300 font-medium',
+        dotClass: 'bg-green-600',
       };
     case 'rejected':
       return {
         label: 'Rejected',
-        className: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-        dotClass: 'bg-rose-400',
+        className: 'bg-rose-50 text-rose-700 border-rose-300 font-medium',
+        dotClass: 'bg-rose-500',
       };
     default:
       return {
         label: status,
-        className: 'bg-slate-500/10 text-slate-400 border-slate-500/30',
-        dotClass: 'bg-slate-400',
+        className: 'bg-slate-100 text-slate-700 border-slate-300 font-medium',
+        dotClass: 'bg-slate-500',
       };
   }
 }
@@ -153,32 +153,32 @@ export function getProjectStatusBadge(status: ProjectStatus) {
     case 'planning':
       return {
         label: 'Planning',
-        className: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+        className: 'bg-sky-50 text-sky-700 border-sky-300 font-medium',
       };
     case 'in_progress':
       return {
         label: 'In Progress',
-        className: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30',
+        className: 'bg-emerald-50 text-emerald-700 border-emerald-300 font-medium',
       };
     case 'review':
       return {
         label: 'Review',
-        className: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+        className: 'bg-amber-50 text-amber-800 border-amber-300 font-medium',
       };
     case 'completed':
       return {
         label: 'Completed',
-        className: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+        className: 'bg-green-100 text-green-800 border-green-300 font-medium',
       };
     case 'on_hold':
       return {
         label: 'On Hold',
-        className: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
+        className: 'bg-slate-100 text-slate-700 border-slate-300 font-medium',
       };
     default:
       return {
         label: status,
-        className: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
+        className: 'bg-slate-100 text-slate-700 border-slate-300 font-medium',
       };
   }
 }
@@ -188,22 +188,22 @@ export function getTaskPriorityBadge(priority: TaskPriority) {
     case 'urgent':
       return {
         label: 'Urgent',
-        className: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
+        className: 'bg-rose-50 text-rose-700 border-rose-300 font-medium',
       };
     case 'high':
       return {
         label: 'High',
-        className: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
+        className: 'bg-orange-50 text-orange-700 border-orange-300 font-medium',
       };
     case 'medium':
       return {
         label: 'Medium',
-        className: 'bg-violet-500/15 text-violet-400 border-violet-500/30',
+        className: 'bg-emerald-50 text-emerald-700 border-emerald-300 font-medium',
       };
     case 'low':
       return {
         label: 'Low',
-        className: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
+        className: 'bg-slate-100 text-slate-600 border-slate-300 font-medium',
       };
   }
 }
@@ -213,17 +213,17 @@ export function getPaymentStatusBadge(status: PaymentStatus) {
     case 'paid':
       return {
         label: 'Paid',
-        className: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
+        className: 'bg-emerald-50 text-emerald-800 border-emerald-300 font-medium',
       };
     case 'pending':
       return {
         label: 'Pending',
-        className: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+        className: 'bg-amber-50 text-amber-800 border-amber-300 font-medium',
       };
     case 'overdue':
       return {
         label: 'Overdue',
-        className: 'bg-rose-500/15 text-rose-400 border-rose-500/30 animate-pulse',
+        className: 'bg-rose-50 text-rose-700 border-rose-300 font-medium animate-pulse',
       };
   }
 }

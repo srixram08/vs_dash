@@ -4,22 +4,8 @@ import { useProjects } from '../hooks/useProjects';
 import { Task, TaskStatus, TaskPriority } from '../types';
 import { CreateTaskModal } from '../components/tasks/CreateTaskModal';
 import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import {
-  formatDate,
-  getDaysRemaining,
-  getTaskPriorityBadge,
-} from '../lib/utils';
-import {
-  CheckSquare,
-  Plus,
-  Search,
-  Filter,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  User,
-} from 'lucide-react';
+import { formatDate, getDaysRemaining, getTaskPriorityBadge } from '../lib/utils';
+import { CheckSquare, Plus, Search, CheckCircle2 } from 'lucide-react';
 
 export const Tasks: React.FC = () => {
   const { tasks, isLoading, updateStatus, createTask } = useTasks();
@@ -31,8 +17,8 @@ export const Tasks: React.FC = () => {
 
   const statuses: { key: TaskStatus; label: string; dot: string }[] = [
     { key: 'todo', label: 'To Do', dot: 'bg-slate-400' },
-    { key: 'doing', label: 'In Progress', dot: 'bg-cyan-400' },
-    { key: 'done', label: 'Completed', dot: 'bg-emerald-400' },
+    { key: 'doing', label: 'In Progress', dot: 'bg-emerald-500' },
+    { key: 'done', label: 'Completed', dot: 'bg-green-600' },
   ];
 
   const filteredTasks = useMemo(() => {
@@ -41,28 +27,31 @@ export const Tasks: React.FC = () => {
         t.title.toLowerCase().includes(search.toLowerCase()) ||
         (t.description && t.description.toLowerCase().includes(search.toLowerCase()));
 
-      const matchesAssignee =
-        selectedAssignee === 'all' || t.assignee === selectedAssignee;
-
-      const matchesPriority =
-        selectedPriority === 'all' || t.priority === selectedPriority;
+      const matchesAssignee = selectedAssignee === 'all' || t.assignee === selectedAssignee;
+      const matchesPriority = selectedPriority === 'all' || t.priority === selectedPriority;
 
       return matchesSearch && matchesAssignee && matchesPriority;
     });
   }, [tasks, search, selectedAssignee, selectedPriority]);
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-sans">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Founder Task Board
-            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-800 text-slate-300">
-              {tasks.length} Total
+          <div className="flex items-center gap-2 mb-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Workflow Execution
             </span>
+            <span className="text-xs text-slate-400 font-normal">
+              {tasks.length} Total Deliverables
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+            Founder Task Board
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-0.5">
             Global action items and checklist across all active studio deliverables
           </p>
         </div>
@@ -72,6 +61,7 @@ export const Tasks: React.FC = () => {
           size="sm"
           leftIcon={<Plus className="w-4 h-4" />}
           onClick={() => setIsModalOpen(true)}
+          className="rounded-full text-xs font-semibold px-4 py-2 shadow-xs"
         >
           Add Task
         </Button>
@@ -80,11 +70,13 @@ export const Tasks: React.FC = () => {
       {/* Filter and Assignee Selector */}
       <div className="flex flex-col sm:flex-row items-center gap-3">
         <div className="relative flex-1 w-full max-w-md">
-          <Input
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            leftIcon={<Search className="w-4 h-4" />}
+            className="w-full bg-white text-xs text-slate-800 placeholder-slate-400 pl-9 pr-4 py-2 rounded-full border border-slate-200 outline-none focus:border-emerald-500 shadow-2xs"
           />
         </div>
 
@@ -92,7 +84,7 @@ export const Tasks: React.FC = () => {
           <select
             value={selectedAssignee}
             onChange={(e) => setSelectedAssignee(e.target.value)}
-            className="w-full sm:w-48 rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary-500"
+            className="w-full sm:w-48 rounded-full bg-white border border-slate-200 px-3.5 py-2 text-xs text-slate-700 outline-none focus:border-emerald-500 shadow-2xs"
           >
             <option value="all">All Assignees</option>
             <option value="a0000000-0000-0000-0000-000000000001">Sanjay (Dev & AI)</option>
@@ -102,7 +94,7 @@ export const Tasks: React.FC = () => {
           <select
             value={selectedPriority}
             onChange={(e) => setSelectedPriority(e.target.value)}
-            className="w-full sm:w-36 rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary-500"
+            className="w-full sm:w-36 rounded-full bg-white border border-slate-200 px-3.5 py-2 text-xs text-slate-700 outline-none focus:border-emerald-500 shadow-2xs"
           >
             <option value="all">All Priorities</option>
             <option value="urgent">Urgent</option>
@@ -120,19 +112,19 @@ export const Tasks: React.FC = () => {
           return (
             <div
               key={st.key}
-              className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-4 space-y-3"
+              className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 space-y-3.5"
             >
-              <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
                 <div className="flex items-center gap-2">
                   <span className={`w-2 h-2 rounded-full ${st.dot}`} />
-                  <h3 className="text-xs font-bold text-slate-200">{st.label}</h3>
+                  <h3 className="text-xs font-bold text-slate-800 tracking-tight">{st.label}</h3>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-600 border border-slate-200 shadow-2xs">
                   {colTasks.length}
                 </span>
               </div>
 
-              <div className="space-y-2.5 min-h-[200px]">
+              <div className="space-y-3 min-h-[200px]">
                 {colTasks.length === 0 ? (
                   <div className="text-center py-12 text-slate-400 text-xs italic">
                     No tasks in {st.label.toLowerCase()}
@@ -146,11 +138,11 @@ export const Tasks: React.FC = () => {
                     return (
                       <div
                         key={t.id}
-                        className="glass-card rounded-xl p-3.5 space-y-2.5 border border-slate-800/80"
+                        className="minimal-card rounded-2xl p-4 space-y-3 relative group bg-white shadow-2xs"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${priorityBadge.className}`}
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${priorityBadge.className}`}
                           >
                             {priorityBadge.label}
                           </span>
@@ -161,7 +153,7 @@ export const Tasks: React.FC = () => {
                             onChange={(e) =>
                               updateStatus({ id: t.id, status: e.target.value as TaskStatus })
                             }
-                            className="bg-slate-900 border border-slate-700/80 text-[10px] font-semibold rounded px-1.5 py-0.5 text-slate-300 outline-none focus:border-primary-500"
+                            className="bg-slate-50 border border-slate-200/80 text-[10px] font-semibold rounded-full px-2.5 py-0.5 text-slate-700 outline-none focus:border-emerald-500 shadow-2xs cursor-pointer"
                           >
                             <option value="todo">To Do</option>
                             <option value="doing">Doing</option>
@@ -171,28 +163,28 @@ export const Tasks: React.FC = () => {
 
                         <div>
                           <h4
-                            className={`text-xs font-medium text-slate-100 ${
+                            className={`text-xs font-bold text-slate-900 leading-snug ${
                               t.status === 'done' ? 'line-through text-slate-400' : ''
                             }`}
                           >
                             {t.title}
                           </h4>
                           {t.description && (
-                            <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+                            <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
                               {t.description}
                             </p>
                           )}
                         </div>
 
-                        <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-                          <span className="truncate text-[10px] text-cyan-400/90 font-medium">
-                            {project?.title || 'Project'}
+                        <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                          <span className="truncate text-[10px] text-emerald-700 font-semibold">
+                            {project?.title || 'Studio Project'}
                           </span>
                           {t.due_date && (
                             <span
-                              className={`text-[10px] font-semibold ${
+                              className={`text-[10px] font-bold ${
                                 daysInfo.isOverdue && t.status !== 'done'
-                                  ? 'text-rose-400'
+                                  ? 'text-rose-600'
                                   : 'text-slate-400'
                               }`}
                             >

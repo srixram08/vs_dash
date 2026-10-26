@@ -18,10 +18,9 @@ import {
   List,
   Plus,
   Search,
-  Filter,
-  AlertTriangle,
-  Clock,
+  CheckCircle2,
 } from 'lucide-react';
+import { RupeeIcon } from '../components/ui/RupeeIcon';
 
 export const Projects: React.FC = () => {
   const { projects, isLoading, updateStatus, updateProgress, createProject } = useProjects();
@@ -31,10 +30,10 @@ export const Projects: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const columns: { key: ProjectStatus; label: string; dotColor: string }[] = [
-    { key: 'planning', label: 'Planning', dotColor: 'bg-blue-400' },
-    { key: 'in_progress', label: 'In Progress', dotColor: 'bg-cyan-400' },
-    { key: 'review', label: 'Review & QA', dotColor: 'bg-amber-400' },
-    { key: 'completed', label: 'Completed', dotColor: 'bg-emerald-400' },
+    { key: 'planning', label: 'Planning', dotColor: 'bg-sky-500' },
+    { key: 'in_progress', label: 'In Progress', dotColor: 'bg-emerald-500' },
+    { key: 'review', label: 'Review & QA', dotColor: 'bg-amber-500' },
+    { key: 'completed', label: 'Completed', dotColor: 'bg-green-600' },
     { key: 'on_hold', label: 'On Hold', dotColor: 'bg-slate-400' },
   ];
 
@@ -49,45 +48,53 @@ export const Projects: React.FC = () => {
   }, [projects, search, selectedService]);
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-sans">
       {/* Top Header & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-            Active Projects Hub
-            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-slate-800 text-slate-300">
-              {projects.length} Total
+          <div className="flex items-center gap-2 mb-1">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Active Projects Hub
             </span>
+            <span className="text-xs text-slate-400 font-normal">
+              {projects.length} Total Engagements
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">
+            Client Delivery Board
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-0.5">
             Track client delivery, progress benchmarks, deadlines, and project cashflow
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* View mode toggle */}
-          <div className="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-1">
+        <div className="flex items-center gap-2.5">
+          {/* Segmented View Mode Toggle */}
+          <div className="segmented-pill-container">
             <button
               onClick={() => setViewMode('kanban')}
-              className={`p-1.5 rounded-md transition ${
+              className={`p-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
                 viewMode === 'kanban'
-                  ? 'bg-primary-600/30 text-cyan-400 border border-primary-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-slate-950 shadow-2xs'
+                  : 'text-slate-500 hover:text-slate-800'
               }`}
               title="Kanban Board View"
             >
               <LayoutGrid className="w-4 h-4" />
+              <span className="hidden sm:inline text-[11px]">Kanban</span>
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-1.5 rounded-md transition ${
+              className={`p-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
                 viewMode === 'list'
-                  ? 'bg-primary-600/30 text-cyan-400 border border-primary-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-slate-950 shadow-2xs'
+                  : 'text-slate-500 hover:text-slate-800'
               }`}
               title="List View"
             >
               <List className="w-4 h-4" />
+              <span className="hidden sm:inline text-[11px]">List</span>
             </button>
           </div>
 
@@ -96,6 +103,7 @@ export const Projects: React.FC = () => {
             size="sm"
             leftIcon={<Plus className="w-4 h-4" />}
             onClick={() => setIsCreateModalOpen(true)}
+            className="rounded-full text-xs font-semibold px-4 py-2 shadow-xs"
           >
             New Project
           </Button>
@@ -105,18 +113,21 @@ export const Projects: React.FC = () => {
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-center gap-3">
         <div className="relative flex-1 w-full max-w-md">
-          <Input
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
             placeholder="Search projects or clients..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            leftIcon={<Search className="w-4 h-4" />}
+            className="w-full bg-white text-xs text-slate-800 placeholder-slate-400 pl-9 pr-4 py-2 rounded-full border border-slate-200 outline-none focus:border-emerald-500 shadow-2xs"
           />
         </div>
+
         <div className="w-full sm:w-auto">
           <select
             value={selectedService}
             onChange={(e) => setSelectedService(e.target.value)}
-            className="w-full sm:w-48 rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary-500"
+            className="w-full sm:w-48 rounded-full bg-white border border-slate-200 px-3.5 py-2 text-xs text-slate-700 outline-none focus:border-emerald-500 shadow-2xs"
           >
             <option value="all">All Studio Services</option>
             <option value="website_design_dev">Web Design & Dev</option>
@@ -135,15 +146,15 @@ export const Projects: React.FC = () => {
             return (
               <div
                 key={col.key}
-                className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-3 min-w-[240px] space-y-3"
+                className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 min-w-[240px] space-y-3"
               >
                 {/* Column Header */}
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${col.dotColor}`} />
-                    <h3 className="text-xs font-bold text-slate-200">{col.label}</h3>
+                    <h3 className="text-xs font-bold text-slate-800 tracking-tight">{col.label}</h3>
                   </div>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-600 border border-slate-200 shadow-2xs">
                     {colProjects.length}
                   </span>
                 </div>
@@ -151,7 +162,7 @@ export const Projects: React.FC = () => {
                 {/* Cards Container */}
                 <div className="space-y-3 min-h-[150px]">
                   {colProjects.length === 0 ? (
-                    <div className="text-center py-8 text-slate-400 text-xs italic">
+                    <div className="text-center py-10 text-slate-400 text-xs italic">
                       No projects
                     </div>
                   ) : (
@@ -171,70 +182,73 @@ export const Projects: React.FC = () => {
         </div>
       ) : (
         /* List View */
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden backdrop-blur-md">
+        <div className="minimal-card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-900/90 text-slate-400 uppercase tracking-wider text-[10px] border-b border-slate-800">
+              <thead className="bg-slate-50/80 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-100 font-bold">
                 <tr>
-                  <th className="py-3 px-4 font-semibold">Project Title & Client</th>
-                  <th className="py-3 px-4 font-semibold">Service</th>
-                  <th className="py-3 px-4 font-semibold">Status</th>
-                  <th className="py-3 px-4 font-semibold">Progress</th>
-                  <th className="py-3 px-4 font-semibold">Deadline</th>
-                  <th className="py-3 px-4 font-semibold text-right">Balance</th>
+                  <th className="py-3.5 px-5">Project Title & Client</th>
+                  <th className="py-3.5 px-4">Service</th>
+                  <th className="py-3.5 px-4">Status</th>
+                  <th className="py-3.5 px-4">Progress</th>
+                  <th className="py-3.5 px-4">Deadline</th>
+                  <th className="py-3.5 px-5 text-right">Balance</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80">
+              <tbody className="divide-y divide-slate-100">
                 {filteredProjects.map((p) => {
                   const statusBadge = getProjectStatusBadge(p.status);
                   const daysInfo = getDaysRemaining(p.due_date);
                   return (
-                    <tr key={p.id} className="hover:bg-slate-800/50 transition">
-                      <td className="py-3.5 px-4">
-                        <div className="font-semibold text-slate-100">{p.title}</div>
-                        <div className="text-[11px] text-slate-400">{p.client?.name}</div>
+                    <tr key={p.id} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="py-4 px-5">
+                        <div className="font-bold text-slate-900">{p.title}</div>
+                        <div className="text-[11px] text-slate-500">{p.client?.name}</div>
                       </td>
-                      <td className="py-3.5 px-4 font-medium text-slate-300">
+                      <td className="py-4 px-4 font-medium text-slate-700">
                         {formatServiceType(p.service_type)}
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <span
-                          className={`px-2 py-0.5 text-[10px] font-semibold rounded-md border ${statusBadge.className}`}
+                          className={`inline-flex items-center px-2.5 py-0.5 text-[11px] font-semibold rounded-full border ${statusBadge.className}`}
                         >
                           {statusBadge.label}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-24 bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                          <div className="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
                             <div
-                              className="bg-cyan-500 h-full rounded-full"
+                              className="bg-emerald-600 h-full rounded-full"
                               style={{ width: `${p.progress_percent}%` }}
                             />
                           </div>
-                          <span className="font-medium text-slate-300">{p.progress_percent}%</span>
+                          <span className="font-bold text-slate-700">{p.progress_percent}%</span>
                         </div>
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4">
                         <span
-                          className={`font-medium ${
+                          className={`font-semibold ${
                             daysInfo.isOverdue
-                              ? 'text-rose-400 font-bold'
+                              ? 'text-rose-600'
                               : daysInfo.isDueSoon
-                              ? 'text-amber-400 font-bold'
-                              : 'text-slate-400'
+                              ? 'text-amber-700'
+                              : 'text-slate-600'
                           }`}
                         >
                           {daysInfo.text} ({formatDate(p.due_date)})
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-right font-semibold">
+                      <td className="py-4 px-5 text-right font-bold">
                         {p.outstanding_balance && p.outstanding_balance > 0 ? (
-                          <span className="text-amber-400">
+                          <span className="text-amber-700">
                             {formatCurrency(p.outstanding_balance)} left
                           </span>
                         ) : (
-                          <span className="text-emerald-400">Paid</span>
+                          <span className="text-emerald-700 flex items-center justify-end gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            Paid
+                          </span>
                         )}
                       </td>
                     </tr>

@@ -48,28 +48,28 @@ export const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal Dialog */}
       <div
         className={cn(
-          'relative w-full rounded-2xl border border-slate-800 bg-[#0c1220] p-6 shadow-2xl transition-all animate-fade-in z-10 max-h-[90vh] overflow-y-auto',
+          'relative w-full rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl transition-all animate-fade-in z-10 max-h-[90vh] overflow-y-auto text-slate-900',
           sizeClasses[size],
           className
         )}
       >
-        <div className="flex items-start justify-between pb-4 border-b border-slate-800/80">
+        <div className="flex items-start justify-between pb-4 border-b border-slate-100">
           <div>
-            {title && <h3 className="text-lg font-semibold text-slate-100">{title}</h3>}
+            {title && <h3 className="text-lg font-bold text-slate-900">{title}</h3>}
             {description && (
-              <p className="mt-1 text-xs text-slate-400">{description}</p>
+              <p className="mt-1 text-xs text-slate-500">{description}</p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-100 transition"
+            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
           >
             <X className="w-5 h-5" />
           </button>

@@ -55,28 +55,28 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           <div
             key={t.id}
             className={cn(
-              'pointer-events-auto rounded-xl border p-4 shadow-xl backdrop-blur-md transition-all animate-fade-in flex items-start gap-3',
+              'pointer-events-auto rounded-xl border p-4 shadow-xl backdrop-blur-md transition-all animate-fade-in flex items-start gap-3 bg-white',
               t.type === 'lead' &&
-                'border-cyan-500/50 bg-[#0c1626]/95 text-cyan-200 shadow-glow-cyan',
+                'border-emerald-500 bg-emerald-50/95 text-emerald-950 shadow-glow-green',
               t.type === 'success' &&
-                'border-emerald-500/30 bg-[#091a14]/95 text-emerald-200',
+                'border-emerald-300 bg-emerald-50/95 text-emerald-900',
               t.type === 'error' &&
-                'border-rose-500/30 bg-[#200d11]/95 text-rose-200',
+                'border-rose-300 bg-rose-50/95 text-rose-900',
               t.type === 'info' &&
-                'border-primary-500/30 bg-[#140f26]/95 text-primary-200'
+                'border-teal-300 bg-teal-50/95 text-teal-900'
             )}
           >
             <div className="mt-0.5 flex-shrink-0">
-              {t.type === 'lead' && <Bell className="w-5 h-5 text-cyan-400 animate-bounce" />}
-              {t.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-400" />}
-              {t.type === 'error' && <AlertCircle className="w-5 h-5 text-rose-400" />}
-              {t.type === 'info' && <Info className="w-5 h-5 text-primary-400" />}
+              {t.type === 'lead' && <Bell className="w-5 h-5 text-emerald-600 animate-bounce" />}
+              {t.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+              {t.type === 'error' && <AlertCircle className="w-5 h-5 text-rose-600" />}
+              {t.type === 'info' && <Info className="w-5 h-5 text-teal-600" />}
             </div>
 
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-slate-100">{t.title}</h4>
+              <h4 className="text-sm font-bold text-slate-900">{t.title}</h4>
               {t.description && (
-                <p className="mt-0.5 text-xs text-slate-300 leading-relaxed">{t.description}</p>
+                <p className="mt-0.5 text-xs text-slate-600 leading-relaxed">{t.description}</p>
               )}
               {t.action && (
                 <button
@@ -84,7 +84,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                     t.action?.onClick();
                     removeToast(t.id);
                   }}
-                  className="mt-2 text-xs font-semibold text-cyan-400 hover:text-cyan-300 underline underline-offset-2"
+                  className="mt-2 text-xs font-bold text-emerald-600 hover:text-emerald-700 underline underline-offset-2"
                 >
                   {t.action.label}
                 </button>
@@ -93,7 +93,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
             <button
               onClick={() => removeToast(t.id)}
-              className="text-slate-400 hover:text-slate-100 p-0.5 rounded transition"
+              className="text-slate-400 hover:text-slate-700 p-0.5 rounded transition"
             >
               <X className="w-4 h-4" />
             </button>

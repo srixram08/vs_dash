@@ -72,13 +72,13 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
       description="Assign action items and deliverables to either founder."
       size="md"
     >
-      <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+      <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Project</label>
+          <label className="block text-xs font-semibold text-slate-700">Project</label>
           <select
             value={projectId}
             onChange={(e) => setProjectId(e.target.value)}
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             required
           >
             {projects.map((p) => (
@@ -98,23 +98,23 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
         />
 
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Description</label>
+          <label className="block text-xs font-semibold text-slate-700">Description</label>
           <textarea
             rows={3}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Details, PR links, acceptance criteria..."
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 p-2.5 text-xs text-slate-100 placeholder-slate-500 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 p-2.5 text-xs text-slate-900 placeholder-slate-400 outline-none focus:border-emerald-500 shadow-sm"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Assignee</label>
+            <label className="block text-xs font-semibold text-slate-700">Assignee</label>
             <select
               value={assignee}
               onChange={(e) => setAssignee(e.target.value)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="a0000000-0000-0000-0000-000000000001">Sanjay (Dev & AI Lead)</option>
               <option value="a0000000-0000-0000-0000-000000000002">Sriram (Brand & Design Lead)</option>
@@ -122,11 +122,11 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Priority</label>
+            <label className="block text-xs font-semibold text-slate-700">Priority</label>
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value as TaskPriority)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -143,7 +143,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
           onChange={(e) => setDueDate(e.target.value)}
         />
 
-        <div className="pt-3 flex justify-end gap-2 border-t border-slate-800">
+        <div className="pt-3 flex justify-end gap-2 border-t border-slate-100">
           <Button type="button" variant="outline" size="sm" onClick={onClose}>
             Cancel
           </Button>

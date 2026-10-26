@@ -90,15 +90,15 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
       description={`Submitted ${formatDateTime(inquiry.created_at)}`}
       width="xl"
     >
-      <div className="space-y-6 text-sm">
+      <div className="space-y-6 text-sm font-sans">
         {/* Top Status & Quick Actions Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+        <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400 font-medium">Status:</span>
+            <span className="text-xs text-slate-600 font-bold">Status:</span>
             <select
               value={inquiry.status}
               onChange={(e) => onStatusChange(e.target.value as InquiryStatus)}
-              className="bg-slate-800 border border-slate-700 text-xs font-semibold rounded-lg px-2.5 py-1.5 text-slate-200 outline-none focus:border-primary-500"
+              className="bg-white border border-slate-300 text-xs font-semibold rounded-lg px-2.5 py-1.5 text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="new">New Lead</option>
               <option value="reviewing">Reviewing</option>
@@ -129,42 +129,42 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
         </div>
 
         {/* Contact & Meta Information Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-slate-900/50 border border-slate-800/80">
-          <div className="flex items-center gap-2.5 text-slate-300">
-            <Mail className="w-4 h-4 text-primary-400 flex-shrink-0" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="flex items-center gap-2.5 text-slate-700">
+            <Mail className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <a
               href={`mailto:${inquiry.email}`}
-              className="text-xs hover:text-cyan-400 hover:underline truncate"
+              className="text-xs hover:text-emerald-700 hover:underline truncate font-medium"
             >
               {inquiry.email}
             </a>
           </div>
 
-          <div className="flex items-center gap-2.5 text-slate-300">
-            <Phone className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+          <div className="flex items-center gap-2.5 text-slate-700">
+            <Phone className="w-4 h-4 text-emerald-600 flex-shrink-0" />
             <span className="text-xs">{inquiry.phone || 'No phone provided'}</span>
           </div>
 
-          <div className="flex items-center gap-2.5 text-slate-300">
-            <Building className="w-4 h-4 text-amber-400 flex-shrink-0" />
+          <div className="flex items-center gap-2.5 text-slate-700">
+            <Building className="w-4 h-4 text-amber-600 flex-shrink-0" />
             <span className="text-xs">{inquiry.company || 'Private Individual'}</span>
           </div>
 
-          <div className="flex items-center gap-2.5 text-slate-300">
-            <DollarSign className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-            <span className="text-xs font-semibold text-emerald-300">
+          <div className="flex items-center gap-2.5 text-slate-700">
+            <DollarSign className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <span className="text-xs font-bold text-emerald-800">
               Budget: {inquiry.budget_range}
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5 text-slate-300">
-            <Calendar className="w-4 h-4 text-violet-400 flex-shrink-0" />
+          <div className="flex items-center gap-2.5 text-slate-700">
+            <Calendar className="w-4 h-4 text-teal-600 flex-shrink-0" />
             <span className="text-xs">Deadline: {formatDate(inquiry.deadline)}</span>
           </div>
 
-          <div className="flex items-center gap-2.5 text-slate-300">
-            <span className="text-xs font-medium text-slate-400">Service:</span>
-            <span className="text-xs font-semibold text-cyan-300">
+          <div className="flex items-center gap-2.5 text-slate-700">
+            <span className="text-xs font-bold text-slate-500">Service:</span>
+            <span className="text-xs font-bold text-emerald-800">
               {formatServiceType(inquiry.service_type)}
             </span>
           </div>
@@ -172,10 +172,10 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
 
         {/* Project Requirements & Brief */}
         <div className="space-y-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Project Scope & Requirements
           </h4>
-          <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 text-slate-200 text-xs leading-relaxed whitespace-pre-wrap font-sans">
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 text-xs leading-relaxed whitespace-pre-wrap font-sans">
             {inquiry.requirements}
           </div>
         </div>
@@ -183,7 +183,7 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
         {/* Reference Links */}
         {referenceLinks.length > 0 && (
           <div className="space-y-2">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Inspiration & Reference Links
             </h4>
             <div className="space-y-1.5">
@@ -193,9 +193,9 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
                   href={link.startsWith('http') ? link : `https://${link}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/40 border border-slate-800/80 text-xs text-cyan-400 hover:text-cyan-300 hover:border-cyan-500/40 transition"
+                  className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-emerald-700 hover:text-emerald-900 hover:border-emerald-400 transition"
                 >
-                  <span className="truncate">{link}</span>
+                  <span className="truncate font-medium">{link}</span>
                   <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 ml-2 text-slate-400" />
                 </a>
               ))}
@@ -203,9 +203,9 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
           </div>
         )}
 
-        {/* Uploaded Client Files (Signed URLs) */}
+        {/* Uploaded Client Files */}
         <div className="space-y-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Client Attached Documents (Private Storage)
           </h4>
           {inquiry.file_urls && inquiry.file_urls.length > 0 ? (
@@ -213,18 +213,18 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
               {inquiry.file_urls.map((file, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-3 rounded-lg bg-slate-900/60 border border-slate-800"
+                  className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-200"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <FileText className="w-4 h-4 text-primary-400 flex-shrink-0" />
-                    <span className="text-xs font-medium text-slate-200 truncate">
+                    <FileText className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span className="text-xs font-semibold text-slate-800 truncate">
                       {getFileNameFromPath(file)}
                     </span>
                   </div>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="text-xs"
+                    className="text-xs border-slate-300"
                     isLoading={downloadingFile === file}
                     leftIcon={<Download className="w-3.5 h-3.5" />}
                     onClick={() => handleDownloadFile(file)}
@@ -235,16 +235,16 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
               ))}
             </div>
           ) : (
-            <p className="text-xs text-slate-400 italic p-3 rounded-lg bg-slate-900/30 border border-slate-800/50">
+            <p className="text-xs text-slate-500 italic p-3 rounded-lg bg-slate-50 border border-slate-200">
               No files uploaded by client with this submission.
             </p>
           )}
         </div>
 
         {/* Internal Founder Notes */}
-        <div className="space-y-2 pt-2 border-t border-slate-800">
+        <div className="space-y-2 pt-2 border-t border-slate-200">
           <div className="flex items-center justify-between">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Internal Founder Notes
             </h4>
             <Button
@@ -263,7 +263,7 @@ export const InquiryDetailDrawer: React.FC<InquiryDetailDrawerProps> = ({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Add internal founder discussion, scope notes, call takeaways..."
-            className="w-full rounded-xl bg-slate-900/80 border border-slate-800 p-3 text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:border-primary-500"
+            className="w-full rounded-xl bg-white border border-slate-300 p-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-sm"
           />
         </div>
       </div>

@@ -11,7 +11,7 @@ export const AdminLayout: React.FC = () => {
   const newInquiriesCount = inquiries?.filter((inq) => inq.status === 'new').length || 0;
 
   return (
-    <div className="flex h-screen bg-[#090d16] text-slate-100 overflow-hidden">
+    <div className="flex h-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar newInquiriesCount={newInquiriesCount} />
@@ -21,7 +21,7 @@ export const AdminLayout: React.FC = () => {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
           <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm"
             onClick={() => setMobileMenuOpen(false)}
           />
           <div className="relative z-10">

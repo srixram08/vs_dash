@@ -7,7 +7,8 @@ import {
   getDaysRemaining,
   getProjectStatusBadge,
 } from '../../lib/utils';
-import { Calendar, Clock, DollarSign, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Calendar, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { RupeeIcon } from '../ui/RupeeIcon';
 
 interface ProjectCardProps {
   project: ProjectWithRelations;
@@ -24,47 +25,49 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const statusBadge = getProjectStatusBadge(project.status);
 
   return (
-    <div className="glass-card rounded-xl p-4 space-y-3 border border-slate-800/90 relative group">
-      {/* Header: Title & Service Tag */}
-      <div>
-        <div className="flex items-start justify-between gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400">
-            {formatServiceType(project.service_type)}
-          </span>
-          {/* Status Quick Changer */}
-          <select
-            value={project.status}
-            onChange={(e) => onStatusChange(project.id, e.target.value as ProjectStatus)}
-            className="bg-slate-900 border border-slate-700/80 text-[10px] font-semibold rounded px-1.5 py-0.5 text-slate-300 outline-none focus:border-primary-500 cursor-pointer"
-          >
-            <option value="planning">Planning</option>
-            <option value="in_progress">In Progress</option>
-            <option value="review">Review</option>
-            <option value="completed">Completed</option>
-            <option value="on_hold">On Hold</option>
-          </select>
-        </div>
+    <div className="minimal-card rounded-2xl p-4 sm:p-5 space-y-3.5 relative group bg-white shadow-2xs font-sans">
+      {/* Header: Service Tag & Status Selector */}
+      <div className="flex items-center justify-between gap-2">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/60 uppercase tracking-wider">
+          {formatServiceType(project.service_type)}
+        </span>
 
-        <h3 className="text-xs font-semibold text-slate-100 mt-1 line-clamp-2 leading-snug">
+        {/* Status Selector Pill */}
+        <select
+          value={project.status}
+          onChange={(e) => onStatusChange(project.id, e.target.value as ProjectStatus)}
+          className="bg-slate-50 border border-slate-200/80 text-[10px] font-semibold rounded-full px-2.5 py-1 text-slate-700 outline-none focus:border-emerald-500 cursor-pointer shadow-2xs transition-colors"
+        >
+          <option value="planning">Planning</option>
+          <option value="in_progress">In Progress</option>
+          <option value="review">Review</option>
+          <option value="completed">Completed</option>
+          <option value="on_hold">On Hold</option>
+        </select>
+      </div>
+
+      {/* Project Title & Client */}
+      <div>
+        <h3 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2 leading-snug group-hover:text-emerald-700 transition-colors">
           {project.title}
         </h3>
-        <p className="text-[11px] text-slate-400 mt-0.5 truncate">
-          Client: {project.client?.name || 'Assigned Client'}
+        <p className="text-[11px] text-slate-500 mt-1 truncate">
+          Client: <span className="font-medium text-slate-700">{project.client?.name || 'Assigned Client'}</span>
         </p>
       </div>
 
-      {/* Progress Bar & Quick Slider */}
-      <div className="space-y-1">
-        <div className="flex justify-between text-[11px]">
-          <span className="text-slate-400">Progress</span>
-          <span className="font-semibold text-slate-200">{project.progress_percent}%</span>
+      {/* Progress Bar & Slider */}
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center text-[11px]">
+          <span className="text-slate-400 font-medium">Completion</span>
+          <span className="font-bold text-slate-800">{project.progress_percent}%</span>
         </div>
-        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+        <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 ${
               project.progress_percent === 100
-                ? 'bg-emerald-400'
-                : 'bg-gradient-to-r from-primary-500 to-cyan-400'
+                ? 'bg-emerald-600'
+                : 'bg-gradient-to-r from-emerald-500 to-green-500'
             }`}
             style={{ width: `${project.progress_percent}%` }}
           />
@@ -72,33 +75,36 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
 
       {/* Financials & Deadline Footer */}
-      <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
         {/* Deadline Indicator with Color Flag */}
         <div
-          className={`flex items-center gap-1 font-medium ${
+          className={`flex items-center gap-1 font-semibold ${
             daysInfo.isOverdue
-              ? 'text-rose-400 font-bold'
+              ? 'text-rose-600'
               : daysInfo.isDueSoon
-              ? 'text-amber-400 font-bold'
-              : 'text-slate-400'
+              ? 'text-amber-700'
+              : 'text-slate-500'
           }`}
         >
           {daysInfo.isOverdue ? (
-            <AlertTriangle className="w-3.5 h-3.5 text-rose-400 flex-shrink-0 animate-pulse" />
+            <AlertTriangle className="w-3.5 h-3.5 text-rose-600 flex-shrink-0 animate-pulse" />
           ) : (
-            <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+            <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-slate-400" />
           )}
           <span>{daysInfo.text}</span>
         </div>
 
-        {/* Outstanding Balance */}
-        <div className="font-semibold text-slate-300">
+        {/* Outstanding Balance in INR (₹) */}
+        <div className="font-bold">
           {project.outstanding_balance && project.outstanding_balance > 0 ? (
-            <span className="text-amber-400" title="Outstanding balance">
+            <span className="text-amber-700 font-bold" title="Outstanding balance">
               {formatCurrency(project.outstanding_balance)} left
             </span>
           ) : (
-            <span className="text-emerald-400">Paid in full</span>
+            <span className="text-emerald-700 font-bold flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Paid
+            </span>
           )}
         </div>
       </div>

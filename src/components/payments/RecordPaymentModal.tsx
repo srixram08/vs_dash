@@ -27,7 +27,7 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
   const { projects } = useProjects();
   const [projectId, setProjectId] = useState('');
   const [type, setType] = useState<PaymentType>('advance');
-  const [amount, setAmount] = useState<number>(5000);
+  const [amount, setAmount] = useState<number>(150000);
   const [dueDate, setDueDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [status, setStatus] = useState<PaymentStatus>('pending');
   const [method, setMethod] = useState<string>('Bank Wire');
@@ -70,13 +70,13 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
       description="Track client advance deposits, milestone payments, or final project releases."
       size="md"
     >
-      <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+      <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Project</label>
+          <label className="block text-xs font-semibold text-slate-700">Project</label>
           <select
             value={projectId}
             onChange={(e) => setProjectId(e.target.value)}
-            className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+            className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             required
           >
             {projects.map((p) => (
@@ -89,11 +89,11 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Payment Stage</label>
+            <label className="block text-xs font-semibold text-slate-700">Payment Stage</label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as PaymentType)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="advance">Advance Deposit (Kickoff)</option>
               <option value="milestone">Milestone Release</option>
@@ -102,7 +102,7 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
           </div>
 
           <Input
-            label="Amount (USD)"
+            label="Amount (₹ INR)"
             type="number"
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
@@ -120,11 +120,11 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
           />
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Initial Status</label>
+            <label className="block text-xs font-semibold text-slate-700">Initial Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as PaymentStatus)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="pending">Pending</option>
               <option value="paid">Paid & Settled</option>
@@ -135,11 +135,11 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
 
         {status === 'paid' && (
           <div className="space-y-1.5 animate-fade-in">
-            <label className="block text-xs font-medium text-slate-300">Payment Method</label>
+            <label className="block text-xs font-semibold text-slate-700">Payment Method</label>
             <select
               value={method}
               onChange={(e) => setMethod(e.target.value)}
-              className="w-full rounded-lg bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs text-slate-100 outline-none focus:border-primary-500"
+              className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
               <option value="Bank Wire">Bank Wire Transfer</option>
               <option value="Stripe Invoice">Stripe Invoice</option>
@@ -150,7 +150,7 @@ export const RecordPaymentModal: React.FC<RecordPaymentModalProps> = ({
           </div>
         )}
 
-        <div className="pt-3 flex justify-end gap-2 border-t border-slate-800">
+        <div className="pt-3 flex justify-end gap-2 border-t border-slate-100">
           <Button type="button" variant="outline" size="sm" onClick={onClose}>
             Cancel
           </Button>

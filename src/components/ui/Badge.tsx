@@ -14,29 +14,29 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const variants = {
-    default: 'bg-slate-800 text-slate-300 border-slate-700',
-    violet: 'bg-primary-500/10 text-primary-400 border-primary-500/30',
-    cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-    emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-    amber: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-    rose: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-    slate: 'bg-slate-800/80 text-slate-400 border-slate-700/60',
+    default: 'bg-slate-100 text-slate-700 border-slate-200',
+    violet: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    cyan: 'bg-teal-50 text-teal-800 border-teal-200',
+    emerald: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    amber: 'bg-amber-50 text-amber-800 border-amber-200',
+    rose: 'bg-rose-50 text-rose-800 border-rose-200',
+    slate: 'bg-slate-100 text-slate-700 border-slate-200',
   };
 
   const dotColors = {
     default: 'bg-slate-400',
-    violet: 'bg-primary-400',
-    cyan: 'bg-cyan-400',
-    emerald: 'bg-emerald-400',
-    amber: 'bg-amber-400',
-    rose: 'bg-rose-400',
+    violet: 'bg-emerald-500',
+    cyan: 'bg-teal-500',
+    emerald: 'bg-emerald-500',
+    amber: 'bg-amber-500',
+    rose: 'bg-rose-500',
     slate: 'bg-slate-400',
   };
 
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border tracking-wide select-none',
+        'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border tracking-wide select-none',
         variants[variant],
         className
       )}
