@@ -20,8 +20,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const DEMO_FOUNDER: Admin = {
   id: 'founder-001',
   user_id: 'user-founder-001',
-  name: 'VS Founder',
-  email: 'founder@vsstudio.com',
+  name: 'VISHNU VARDHAN R G',
+  email: 'vishnu@vsstudio.com',
   created_at: new Date().toISOString(),
 };
 
@@ -160,12 +160,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setAdminProfile(null);
   };
 
-  const enableDemoMode = (founderName = 'Sanjay (Founder)') => {
+  const enableDemoMode = (founderName = 'VISHNU VARDHAN R G') => {
     localStorage.setItem('vs_studio_demo_mode', 'true');
     setIsDemoMode(true);
+    const isSriram = founderName.toUpperCase().includes('SRIRAM');
     setAdminProfile({
       ...DEMO_FOUNDER,
-      name: founderName,
+      name: isSriram ? 'SRIRAM S' : 'VISHNU VARDHAN R G',
+      email: isSriram ? 'sriram@vsstudio.com' : 'vishnu@vsstudio.com',
     });
     setIsLoading(false);
   };

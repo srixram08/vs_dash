@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Follow this setup guide to integrate the Deno language server with your editor:
 // https://deno.land/manual/getting_started/setup_your_environment
 // This code is designed to run in Supabase Edge Functions with Deno runtime.
@@ -5,7 +6,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const FOUNDER_EMAILS = Deno.env.get("FOUNDER_EMAILS") || "sanjay@vsstudio.com,sriram@vsstudio.com";
+const FOUNDER_EMAILS = Deno.env.get("FOUNDER_EMAILS") || "vishnu@vsstudio.com,sriram@vsstudio.com";
 const FROM_EMAIL = Deno.env.get("FROM_EMAIL") || "hello@vsstudio.com";
 
 interface InquiryPayload {
@@ -78,7 +79,7 @@ serve(async (req: Request) => {
             </div>
             
             <p style="font-size: 14px; line-height: 1.6; color: #334155;">
-              Our founders (Sanjay & Sriram) are reviewing your brief and will get back to you with initial scope questions and proposal availability within 24 hours.
+              Our founders (Vishnu Vardhan & Sriram) are reviewing your brief and will get back to you with initial scope questions and proposal availability within 24 hours.
             </p>
             
             <p style="margin-top: 30px; font-size: 13px; color: #64748b;">
@@ -91,7 +92,7 @@ serve(async (req: Request) => {
     });
 
     // 2. Send Alert Email to Both Founders
-    const founderEmails = FOUNDER_EMAILS.split(",").map((e) => e.trim());
+    const founderEmails = FOUNDER_EMAILS.split(",").map((e: string) => e.trim());
     const founderEmailPromise = fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {

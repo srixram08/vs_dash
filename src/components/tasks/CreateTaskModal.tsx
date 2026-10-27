@@ -116,8 +116,8 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
               onChange={(e) => setAssignee(e.target.value)}
               className="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs text-slate-800 outline-none focus:border-emerald-500 shadow-sm"
             >
-              <option value="a0000000-0000-0000-0000-000000000001">Sanjay (Dev & AI Lead)</option>
-              <option value="a0000000-0000-0000-0000-000000000002">Sriram (Brand & Design Lead)</option>
+              <option value="a0000000-0000-0000-0000-000000000001">VISHNU VARDHAN R G</option>
+              <option value="a0000000-0000-0000-0000-000000000002">SRIRAM S</option>
             </select>
           </div>
 
