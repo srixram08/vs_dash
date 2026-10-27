@@ -133,7 +133,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMobileMenu }) => {
             onClick={() => setSearchOpen(true)}
             className="relative hidden sm:flex items-center cursor-pointer group"
           >
-            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50/60 hover:bg-white hover:border-slate-300 transition-all text-xs text-slate-400 w-56 md:w-64">
+            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl border border-slate-200/80 bg-slate-50/60 hover:bg-white hover:border-slate-300 transition-all text-xs text-slate-400 w-52 md:w-60">
               <Search className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-colors" />
               <span className="truncate">Search or ask AI...</span>
               <kbd className="ml-auto px-1.5 py-0.5 rounded text-[10px] font-semibold text-slate-400 bg-white border border-slate-200 shadow-2xs">
@@ -141,6 +141,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMobileMenu }) => {
               </kbd>
             </div>
           </div>
+
+          {/* VS AI Quick Trigger */}
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('open-ai-bot'))}
+            title="Open VS AI"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-amber-200/80 bg-amber-50/80 hover:bg-amber-100 text-amber-900 text-xs font-semibold transition-all shadow-2xs active:scale-95 group"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 transition-transform group-hover:rotate-12" />
+            <span className="hidden md:inline font-bold">VS AI</span>
+          </button>
 
           {/* "Import" Button (matches reference screenshot) */}
           <button
@@ -303,6 +313,39 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMobileMenu }) => {
 
             {/* Results List */}
             <div className="p-3 max-h-96 overflow-y-auto space-y-3 text-xs">
+              {/* Ask VS AI Banner */}
+              <div
+                onClick={() => {
+                  const q = searchQuery.trim();
+                  setSearchOpen(false);
+                  setSearchQuery('');
+                  window.dispatchEvent(
+                    new CustomEvent('open-ai-bot', {
+                      detail: { query: q || 'Give me a studio executive briefing' },
+                    })
+                  );
+                }}
+                className="p-3 rounded-xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-purple-500/10 border border-amber-300/60 hover:border-amber-400 cursor-pointer flex items-center justify-between transition group shadow-2xs"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-slate-950 text-amber-300 flex items-center justify-center shadow-xs">
+                    <Sparkles className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                      <span>Ask VS AI:</span>
+                      <span className="text-amber-800 font-semibold italic truncate max-w-xs">
+                        &ldquo;{searchQuery.trim() || 'Studio Executive Briefing'}&rdquo;
+                      </span>
+                    </p>
+                    <p className="text-[10px] text-slate-500">
+                      Live real-time intelligence on projects, cash flow, and tasks
+                    </p>
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-slate-900 group-hover:translate-x-0.5 transition" />
+              </div>
+
               {searchQuery.trim() === '' ? (
                 <div className="space-y-2">
                   <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2">

@@ -107,8 +107,18 @@ export const Overview: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Overview</h1>
         </div>
 
-        {/* Controls: Customize, This week dropdown, Filter icon */}
+        {/* Controls: VS AI, Customize, This week dropdown, Filter icon */}
         <div className="flex items-center gap-2.5">
+          {/* VS AI Button */}
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('open-ai-bot'))}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-amber-200/90 bg-amber-50/70 hover:bg-amber-100/90 text-amber-900 text-xs font-semibold transition shadow-2xs active:scale-95 group"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 transition-transform group-hover:rotate-12" />
+            <span className="font-bold">VS AI</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
+          </button>
+
           {/* Customize Button */}
           <button
             onClick={() => setCustomizeModalOpen(true)}
